@@ -15,13 +15,19 @@ class CjmController extends Controller
         $stageData = [];
         foreach (CustomerJourney::TAHAPAN as $key => $meta) {
             $stageFeedbacks = $feedbacks->where('tahap_journey', $key);
-            $painPoints = $stageFeedbacks->where('rating', '<=', 2);
+            // Definisikan pain points dari sentimen negatif, bukan cuma rating <= 2 (Kualitatif)
+            $painPoints = $stageFeedbacks->where('sentimen', 'negatif');
+            
+            // Dapatkan distribusi tema
+            $temaCount = $stageFeedbacks->whereNotNull('kategori_tema')->countBy('kategori_tema')->sortDesc()->take(2);
+
             $stageData[$key] = [
                 'meta' => $meta,
                 'count' => $stageFeedbacks->count(),
                 'pain_points' => $painPoints->count(),
-                'recent_comments' => $stageFeedbacks->take(2)->pluck('komentar'),
+                'recent_comments' => $stageFeedbacks->whereNotNull('komentar')->take(3), // ambil object-nya untuk emosi
                 'journey' => $journeys->firstWhere('tahapan', $key),
+                'top_themes' => $temaCount
             ];
         }
 

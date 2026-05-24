@@ -13,7 +13,7 @@ class Feedback extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_pelanggan', 'id_produk', 'kategori', 'tahap_journey', 'rating', 'komentar', 'status', 'tanggal_feedback',
+        'id_pelanggan', 'id_produk', 'kategori', 'tahap_journey', 'rating', 'komentar', 'sentimen', 'kategori_tema', 'status', 'tanggal_feedback',
     ];
 
     protected $casts = [

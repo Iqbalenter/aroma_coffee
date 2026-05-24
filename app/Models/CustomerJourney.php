@@ -12,7 +12,7 @@ class CustomerJourney extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['tahapan', 'jumlah_feedback', 'rata_rating'];
+    protected $fillable = ['tahapan', 'jumlah_feedback', 'rata_rating', 'sentimen_dominan'];
 
     protected $casts = [
         'rata_rating' => 'decimal:2',
