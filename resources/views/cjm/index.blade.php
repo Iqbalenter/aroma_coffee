@@ -3,8 +3,8 @@
 @section('content')
 <div class="space-y-6">
     <header class="mb-8">
-        <h1 class="text-3xl font-bold">Kualitatif Customer Journey Map</h1>
-        <p class="text-gray-500">Visualisasi pengalaman pelanggan berbasis Thematic & Sentiment Analysis pada Voice of Customer.</p>
+        <h1 class="text-3xl font-bold">Customer Journey Map</h1>
+        <p class="text-gray-500">Visualisasi pengalaman pelanggan berbasis Thematic & Sentiment Analysis pada Feedback.</p>
     </header>
 
     <!-- Emotional Curve Chart Placeholder -->

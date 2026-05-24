@@ -63,14 +63,14 @@
                 ['Pelanggan', route('pelanggan.index'), 'pelanggan.*', 'users'],
                 ['Produk Menu', route('produk.index'), 'produk.*', 'coffee'],
                 ['Transaksi', route('transaksi.index'), 'transaksi.*', 'receipt'],
-                ['Voice of Customer', route('feedback.index'), 'feedback.*', 'message-circle-heart'],
+                ['Feedback', route('feedback.index'), 'feedback.*', 'message-circle-heart'],
                 ['Journey Map', route('cjm.index'), 'cjm.*', 'map'],
                 ['Segmentasi pelanggan', route('segmentasi.index'), 'segmentasi.*', 'brain-circuit'],
             ] : [
                 ['Dashboard', route('dashboard'), 'dashboard', 'layout-dashboard'],
                 ['Kasir Transaksi', route('transaksi.create'), 'transaksi.create', 'calculator'],
                 ['Data Pelanggan', route('pelanggan.index'), 'pelanggan.*', 'users'],
-                ['Input Voice (Feedback)', route('feedback.create'), 'feedback.create', 'mic'],
+                ['Feedback', route('feedback.create'), 'feedback.create', 'mic'],
             ]) as [$label, $url, $pattern, $icon])
             <a href="{{ $url }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl block text-sm font-medium {{ request()->routeIs($pattern) ? 'active' : 'text-white/60 hover:text-white hover:bg-white/5' }}">
                 <i data-lucide="{{ $icon }}" class="w-4 h-4 {{ request()->routeIs($pattern) ? 'text-accent' : 'opacity-70' }}"></i>

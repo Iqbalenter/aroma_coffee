@@ -4,7 +4,9 @@
 <div class="min-h-screen flex items-center justify-center p-4">
     <div class="card w-full max-w-md p-8">
         <div class="flex flex-col items-center mb-8">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 text-white text-2xl">☕</div>
+            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 text-white text-2xl">
+                <img src="{{ asset('images/logo.png')}}"/>
+            </div>
             <h1 class="text-2xl font-bold">Aroma Coffee Bland</h1>
             <p class="text-gray-500 text-sm">Customer Journey Mapping System</p>
         </div>
