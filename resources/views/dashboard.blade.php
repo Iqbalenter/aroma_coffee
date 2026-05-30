@@ -1,187 +1,410 @@
 @extends('layouts.app')
+
 @section('title', 'Dashboard')
+
 @section('content')
+@php
+    $rawLoyalty = data_get($stats, 'loyalty_score', 0);
+    $loyaltyScore = is_numeric($rawLoyalty)
+        ? (float) $rawLoyalty
+        : (float) preg_replace('/[^0-9.]/', '', (string) $rawLoyalty);
+
+    $loyaltyWidth = min(100, max(0, $loyaltyScore));
+
+    $loyaltyStatus = $loyaltyScore >= 70
+        ? 'Excellent'
+        : ($loyaltyScore >= 40 ? 'Good' : 'Needs Attention');
+
+    $metrics = [
+        [
+            'label' => 'Total Pelanggan',
+            'value' => number_format((float) data_get($stats, 'total_customers', 0), 0, ',', '.'),
+            'desc' => 'Profil pelanggan yang sudah tercatat',
+            'icon' => 'users',
+        ],
+        [
+            'label' => 'Total Transaksi',
+            'value' => number_format((float) data_get($stats, 'total_transactions', 0), 0, ',', '.'),
+            'desc' => 'Aktivitas penjualan sepanjang waktu',
+            'icon' => 'receipt',
+        ],
+        [
+            'label' => 'Rating Rata-rata',
+            'value' => number_format((float) data_get($stats, 'avg_rating', 0), 1, ',', '.'),
+            'desc' => 'Skor pengalaman dari feedback pelanggan',
+            'icon' => 'star',
+        ],
+        [
+            'label' => 'Indeks Loyalitas',
+            'value' => rtrim(rtrim(number_format($loyaltyScore, 1, ',', '.'), '0'), ',') . '%',
+            'desc' => 'Estimasi loyalitas berbasis transaksi dan rating',
+            'icon' => 'heart-handshake',
+        ],
+    ];
+
+    $journeyStages = [
+        ['Awareness', 'Pelanggan mengenal Aroma Coffee'],
+        ['Consideration', 'Pelanggan membandingkan pilihan'],
+        ['Purchase', 'Pelanggan melakukan pembelian'],
+        ['Experience', 'Pelanggan merasakan produk dan layanan'],
+        ['Retention', 'Pelanggan berpotensi kembali'],
+        ['Loyalty', 'Pelanggan menjadi pendukung brand'],
+    ];
+
+    $quickActions = session('staff.type') === 'admin'
+        ? [
+            ['Lihat Journey Map', route('cjm.index'), 'map'],
+            ['Analisis Segmentasi', route('segmentasi.index'), 'pie-chart'],
+            ['Buka Laporan', route('laporan.index'), 'file-text'],
+        ]
+        : [
+            ['Input Transaksi', route('transaksi.create'), 'calculator'],
+            ['Tambah Feedback', route('feedback.create'), 'mic'],
+            ['Data Pelanggan', route('pelanggan.index'), 'users'],
+        ];
+@endphp
+
 <div class="space-y-8">
-    <!-- Hero Banner (Memberi kesan Startup/Skripsi Premium) -->
-    <div class="relative bg-primary rounded-3xl overflow-hidden shadow-xl">
-        <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-primary to-transparent opacity-90"></div>
-        <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center justify-between z-10">
-            <div class="text-white space-y-4 max-w-2xl">
-                <p class="font-serif italic text-accent text-xl">Selamat meracik strategi,</p>
-                <h2 class="text-4xl md:text-5xl font-bold font-serif leading-tight">Halo, {{ session('staff.nama') }} 👋</h2>
-                <p class="text-white/80 text-sm md:text-base leading-relaxed">Ini adalah <strong>CJM Data Platform</strong> eksperimental untuk Aroma Coffee Bland. Di sini kita memantau retensi dan menganalisis sentimen suara pelanggan secara kualitatif untuk strategi loyalitas.</p>
-            </div>
-            <div class="hidden md:block bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl text-center">
-                <p class="text-[10px] uppercase tracking-widest text-accent mb-1 font-semibold">Tahun Analisis</p>
-                <p class="text-3xl font-bold text-white font-serif">{{ date('Y') }}</p>
-            </div>
-        </div>
-    </div>
+    <section class="relative overflow-hidden rounded-[2rem] bg-coffee-espresso shadow-soft">
+        <div class="absolute inset-0 coffee-grain-bg opacity-45"></div>
+        <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coffee-caramel/30 blur-3xl"></div>
+        <div class="absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-coffee-latte/10 blur-3xl"></div>
 
-    <!-- Metric Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="card p-6 relative overflow-hidden group">
-            <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-50 rounded-full group-hover:scale-110 transition-transform -z-10"></div>
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Total Pelanggan</p>
-                    <p class="text-4xl font-bold text-dark mt-1">{{ $stats['total_customers'] }}</p>
+        <div class="relative grid gap-8 p-6 md:grid-cols-[1.5fr_.8fr] md:p-10">
+            <div class="max-w-3xl">
+                <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[.18em] text-coffee-cream">
+                    <i data-lucide="coffee" class="h-4 w-4 text-coffee-caramel"></i>
+                    Customer Journey Intelligence
                 </div>
-                <div class="p-3 bg-blue-100 text-blue-600 rounded-xl"><i data-lucide="users" class="w-6 h-6"></i></div>
-            </div>
-            <p class="text-xs text-gray-400">Total data pelanggan di sistem</p>
-        </div>
 
-        <div class="card p-6 relative overflow-hidden group">
-            <div class="absolute -right-4 -top-4 w-24 h-24 bg-green-50 rounded-full group-hover:scale-110 transition-transform -z-10"></div>
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Transaksi (Penjualan)</p>
-                    <p class="text-4xl font-bold text-dark mt-1">{{ $stats['total_transactions'] }}</p>
+                <p class="font-serif text-2xl italic text-coffee-caramel">
+                    Selamat meracik strategi,
+                </p>
+
+                <h1 class="mt-2 font-serif text-4xl font-bold leading-tight text-white md:text-6xl">
+                    Halo, {{ session('staff.nama') }}
+                </h1>
+
+                <p class="mt-5 max-w-2xl text-sm leading-7 text-white md:text-base">
+                    Dashboard ini dirancang sebagai ruang analisis pelanggan Aroma Coffee Bland:
+                    membaca transaksi, feedback, sentimen, dan potensi loyalitas dalam satu tampilan
+                    yang lebih hangat, modern, dan sesuai karakter coffee shop.
+                </p>
+
+                <div class="mt-7 flex flex-wrap gap-3">
+                    @foreach($quickActions as [$label, $url, $icon])
+                        <a href="{{ $url }}"
+                           class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/15">
+                            <i data-lucide="{{ $icon }}" class="h-4 w-4 text-coffee-caramel"></i>
+                            {{ $label }}
+                        </a>
+                    @endforeach
                 </div>
-                <div class="p-3 bg-green-100 text-green-600 rounded-xl"><i data-lucide="receipt" class="w-6 h-6"></i></div>
             </div>
-            <p class="text-xs text-gray-400">Terdata sepanjang waktu</p>
-        </div>
 
-        <div class="card p-6 relative overflow-hidden group">
-            <div class="absolute -right-4 -top-4 w-24 h-24 bg-yellow-50 rounded-full group-hover:scale-110 transition-transform -z-10"></div>
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Rating Keseluruhan</p>
-                    <p class="text-4xl font-bold text-dark mt-1">{{ $stats['avg_rating'] }}</p>
+            <div class="rounded-[1.7rem] border border-white/10 bg-white/10 p-5 text-white backdrop-blur-xl">
+                <p class="text-[11px] font-bold uppercase tracking-[.20em] text-coffee-caramel">
+                    Tahun Analisis
+                </p>
+
+                <div class="mt-2 flex items-end justify-between gap-4">
+                    <p class="font-serif text-6xl font-bold">{{ date('Y') }}</p>
+                    <div class="rounded-2xl bg-white/10 p-3">
+                        <i data-lucide="calendar" class="h-7 w-7 text-coffee-cream"></i>
+                    </div>
                 </div>
-                <div class="p-3 bg-yellow-100 text-yellow-600 rounded-xl"><i data-lucide="star" class="w-6 h-6"></i></div>
+
+                <div class="mt-7">
+                    <div class="mb-2 flex items-center justify-between text-sm">
+                        <span class="font-semibold text-white/70">Loyalty Health</span>
+                        <span class="font-bold text-coffee-cream">{{ $loyaltyStatus }}</span>
+                    </div>
+
+                    <div class="h-3 overflow-hidden rounded-full bg-white/10">
+                        <div class="h-full rounded-full bg-gradient-to-r from-coffee-caramel to-coffee-latte"
+                             style="width: {{ $loyaltyWidth }}%"></div>
+                    </div>
+
+                    <p class="mt-3 text-xs leading-6 text-white/58">
+                        Nilai ini membantu membaca apakah pelanggan cenderung baru, aktif,
+                        potensial loyal, atau perlu pendekatan ulang.
+                    </p>
+                </div>
             </div>
-            <p class="text-xs text-gray-400">Rata-rata dari skor 1.0 - 5.0</p>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        @foreach($metrics as $metric)
+            <div class="card group relative overflow-hidden p-6">
+                <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-coffee-caramel/10 transition group-hover:scale-110"></div>
+
+                <div class="relative flex items-start justify-between gap-5">
+                    <div>
+                        <p class="text-[11px] font-extrabold uppercase tracking-[.16em] text-coffee-bronze">
+                            {{ $metric['label'] }}
+                        </p>
+
+                        <p class="mt-3 text-4xl font-extrabold tracking-tight text-coffee-espresso">
+                            {{ $metric['value'] }}
+                        </p>
+                    </div>
+
+                    <div class="flex h-13 w-13 items-center justify-center rounded-2xl bg-coffee-cream text-coffee-mocha">
+                        <i data-lucide="{{ $metric['icon'] }}" class="h-6 w-6"></i>
+                    </div>
+                </div>
+
+                <p class="relative mt-5 text-sm leading-6 text-coffee-espresso/55">
+                    {{ $metric['desc'] }}
+                </p>
+            </div>
+        @endforeach
+    </section>
+
+    <section class="card p-6 md:p-7">
+        <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+                <p class="text-[11px] font-extrabold uppercase tracking-[.18em] text-coffee-bronze">
+                    Customer Journey Mapping
+                </p>
+                <h2 class="mt-2 font-serif text-3xl font-bold text-coffee-espresso">
+                    Alur Pengalaman Pelanggan Aroma Coffee
+                </h2>
+            </div>
+
+            <span class="badge w-fit">
+                <i data-lucide="sparkles" class="h-4 w-4"></i>
+                Coffee-themed CJM
+            </span>
         </div>
 
-        <div class="card p-6 relative overflow-hidden group border-accent/30 bg-gradient-to-br from-white to-amber-50">
-            <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-100/50 rounded-full group-hover:scale-110 transition-transform -z-10"></div>
-            <div class="flex justify-between items-start mb-2">
-                <p class="text-[10px] text-accent uppercase font-bold tracking-wider">Indeks Loyalitas</p>
-                <div class="p-2 bg-gradient-to-r from-accent to-yellow-500 text-white rounded-lg shadow-sm"><i data-lucide="award" class="w-5 h-5"></i></div>
-            </div>
-            <div class="flex items-end gap-3 mt-1">
-                <span class="text-4xl font-bold text-primary">{{ $stats['loyalty_score'] }}</span>
-                <span class="loyalty-badge mb-2">{{ (float)$stats['loyalty_score'] > 70 ? 'Excellent' : ((float)$stats['loyalty_score'] > 40 ? 'Good' : 'Low') }}</span>
-            </div>
-            <p class="text-xs text-primary/60 mt-3 font-medium">Berdasarkan RFM Analysis</p>
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+            @foreach($journeyStages as $index => [$stage, $description])
+                <div class="rounded-3xl border border-coffee-mocha/10 bg-white/55 p-4">
+                    <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-coffee-espresso text-sm font-extrabold text-white">
+                        {{ $index + 1 }}
+                    </div>
+
+                    <h3 class="font-bold text-coffee-espresso">{{ $stage }}</h3>
+                    <p class="mt-2 text-xs leading-6 text-coffee-espresso/55">
+                        {{ $description }}
+                    </p>
+                </div>
+            @endforeach
         </div>
-    </div>
+    </section>
 
     @if(session('staff.type') === 'admin')
-    <div class="grid lg:grid-cols-3 gap-6">
-        <!-- Sales Chart -->
-        <div class="card p-6 lg:col-span-2">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h3 class="font-bold text-lg text-dark">Tren Transaksi Bulanan</h3>
-                    <p class="text-xs text-gray-500">Volume transaksi dalam tahun berjalan</p>
-                </div>
-                <button class="bg-gray-100 p-2 rounded-lg text-gray-500 hover:text-dark"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
-            </div>
-            <div class="relative h-64 w-full">
-                <canvas id="salesChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Satisfaction Chart -->
-        <div class="card p-6">
-            <h3 class="font-bold text-lg text-dark mb-1">Peta Sentimen</h3>
-            <p class="text-xs text-gray-500 mb-6">Distribusi emosi/kepuasan pelanggan</p>
-            <div class="relative h-48 w-full flex justify-center items-center">
-                <canvas id="satisfactionChart"></canvas>
-            </div>
-            <!-- Custom Legend -->
-            <div class="mt-6 flex flex-col gap-3">
-                @foreach($satisfaction as $item)
-                @php
-                    $colors = ['Positif' => 'bg-green-500', 'Netral' => 'bg-yellow-500', 'Negatif' => 'bg-red-500'];
-                    $color = $colors[$item['name']] ?? 'bg-primary';
-                @endphp
-                <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full {{ $color }}"></span>
-                        <span class="text-gray-600">{{ $item['name'] }}</span>
+        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.45fr_.9fr]">
+            <div class="card p-6 md:p-7">
+                <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                    <div>
+                        <p class="text-[11px] font-extrabold uppercase tracking-[.18em] text-coffee-bronze">
+                            Tren Transaksi
+                        </p>
+                        <h2 class="mt-2 font-serif text-3xl font-bold text-coffee-espresso">
+                            Pergerakan Penjualan Bulanan
+                        </h2>
                     </div>
-                    <span class="font-bold text-dark">{{ $item['value'] }}%</span>
+
+                    <div class="rounded-2xl bg-coffee-cream px-4 py-3 text-sm font-bold text-coffee-mocha">
+                        Tahun {{ date('Y') }}
+                    </div>
                 </div>
-                @endforeach
+
+                <div class="h-80">
+                    <canvas id="salesChart"></canvas>
+                </div>
             </div>
-        </div>
-    </div>
+
+            <div class="card p-6 md:p-7">
+                <div class="mb-6">
+                    <p class="text-[11px] font-extrabold uppercase tracking-[.18em] text-coffee-bronze">
+                        Peta Sentimen
+                    </p>
+                    <h2 class="mt-2 font-serif text-3xl font-bold text-coffee-espresso">
+                        Distribusi Kepuasan
+                    </h2>
+                    <p class="mt-2 text-sm leading-6 text-coffee-espresso/55">
+                        Gambaran persepsi pelanggan dari feedback yang masuk.
+                    </p>
+                </div>
+
+                <div class="mx-auto h-64 max-w-xs">
+                    <canvas id="satisfactionChart"></canvas>
+                </div>
+
+                <div class="mt-6 space-y-3">
+                    @foreach(($satisfaction ?? []) as $item)
+                        @php
+                            $name = data_get($item, 'name', '-');
+                            $value = (float) data_get($item, 'value', 0);
+                            $width = min(100, max(0, $value));
+
+                            $color = match ($name) {
+                                'Positif' => '#6F4E37',
+                                'Netral' => '#C7955B',
+                                'Negatif' => '#A15C38',
+                                default => '#A7784D',
+                            };
+                        @endphp
+
+                        <div>
+                            <div class="mb-2 flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2 font-bold text-coffee-espresso">
+                                    <span class="h-3 w-3 rounded-full" style="background: {{ $color }}"></span>
+                                    {{ $name }}
+                                </div>
+                                <span class="font-extrabold text-coffee-mocha">{{ $value }}%</span>
+                            </div>
+
+                            <div class="h-2 overflow-hidden rounded-full bg-coffee-cream">
+                                <div class="h-full rounded-full"
+                                     style="width: {{ $width }}%; background: {{ $color }}"></div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @else
+        <section class="grid gap-6 md:grid-cols-3">
+            <a href="{{ route('transaksi.create') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-espresso text-white">
+                    <i data-lucide="calculator" class="h-6 w-6"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Input Transaksi</h3>
+                <p class="mt-2 text-sm leading-6 text-coffee-espresso/55">
+                    Catat pembelian pelanggan dan detail produk yang terjual.
+                </p>
+            </a>
+
+            <a href="{{ route('feedback.create') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-caramel text-white">
+                    <i data-lucide="mic" class="h-6 w-6"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Tambah Feedback</h3>
+                <p class="mt-2 text-sm leading-6 text-coffee-espresso/55">
+                    Rekam komentar, rating, dan pengalaman pelanggan.
+                </p>
+            </a>
+
+            <a href="{{ route('pelanggan.index') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-bronze text-white">
+                    <i data-lucide="users" class="h-6 w-6"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Data Pelanggan</h3>
+                <p class="mt-2 text-sm leading-6 text-coffee-espresso/55">
+                    Kelola profil pelanggan untuk kebutuhan transaksi dan feedback.
+                </p>
+            </a>
+        </section>
     @endif
 </div>
 
 @if(session('staff.type') === 'admin')
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
-    Chart.defaults.color = '#9CA3AF';
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    // Gradient Setup untuk sales chart
-    const ctx = document.getElementById('salesChart').getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(212, 168, 83, 0.8)'); // Accent color
-    gradient.addColorStop(1, 'rgba(212, 168, 83, 0.1)');
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+                Chart.defaults.color = 'rgba(59, 39, 29, .58)';
 
-    new Chart(ctx, { 
-        type: 'bar', 
-        data: { 
-            labels: @json(array_column($monthlySales, 'name')), 
-            datasets: [{ 
-                label: 'Penjualan', 
-                data: @json(array_column($monthlySales, 'sales')), 
-                backgroundColor: gradient, 
-                hoverBackgroundColor: '#5A3D2B',
-                borderRadius: 6,
-                borderSkipped: false
-            }] 
-        }, 
-        options: { 
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#2C1E16',
-                    padding: 12,
-                    titleFont: { size: 13, family: 'Inter' },
-                    bodyFont: { size: 14, weight: 'bold' },
-                    displayColors: false,
-                    cornerRadius: 8
+                const salesCanvas = document.getElementById('salesChart');
+
+                if (salesCanvas) {
+                    const salesCtx = salesCanvas.getContext('2d');
+                    const gradient = salesCtx.createLinearGradient(0, 0, 0, 340);
+
+                    gradient.addColorStop(0, 'rgba(111, 78, 55, .88)');
+                    gradient.addColorStop(1, 'rgba(199, 149, 91, .20)');
+
+                    new Chart(salesCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: @json(collect($monthlySales ?? [])->pluck('name')->values()),
+                            datasets: [{
+                                label: 'Penjualan',
+                                data: @json(collect($monthlySales ?? [])->pluck('sales')->values()),
+                                backgroundColor: gradient,
+                                hoverBackgroundColor: '#3B271D',
+                                borderRadius: 14,
+                                borderSkipped: false,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: '#241711',
+                                    padding: 14,
+                                    displayColors: false,
+                                    cornerRadius: 14,
+                                    titleFont: { size: 13, weight: '700' },
+                                    bodyFont: { size: 13, weight: '700' }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: 'rgba(111, 78, 55, .08)', drawBorder: false },
+                                    border: { display: false },
+                                    ticks: { padding: 10 }
+                                },
+                                x: {
+                                    grid: { display: false, drawBorder: false },
+                                    border: { display: false },
+                                    ticks: { padding: 10 }
+                                }
+                            }
+                        }
+                    });
                 }
-            },
-            scales: {
-                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, border: { display: false } },
-                x: { grid: { display: false, drawBorder: false }, border: { display: false } }
-            }
-        } 
-    });
 
-    const ctxSat = document.getElementById('satisfactionChart').getContext('2d');
-    new Chart(ctxSat, { 
-        type: 'doughnut', 
-        data: { 
-            labels: @json(array_column($satisfaction, 'name')), 
-            datasets: [{ 
-                data: @json(array_column($satisfaction, 'value')), 
-                backgroundColor: ['#22c55e', '#eab308', '#ef4444'], // update to tailwind exact colors (green, yellow, red)
-                borderWidth: 0,
-                hoverOffset: 4
-            }] 
-        },
-        options: {
-            cutout: '75%',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } }
-        }
-    });
-</script>
-@endpush
+                const satisfactionCanvas = document.getElementById('satisfactionChart');
+
+                if (satisfactionCanvas) {
+                    const satisfactionCtx = satisfactionCanvas.getContext('2d');
+
+                    new Chart(satisfactionCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: @json(collect($satisfaction ?? [])->pluck('name')->values()),
+                            datasets: [{
+                                data: @json(collect($satisfaction ?? [])->pluck('value')->values()),
+                                backgroundColor: ['#6F4E37', '#C7955B', '#A15C38'],
+                                borderColor: '#FDF9F3',
+                                borderWidth: 5,
+                                hoverOffset: 6
+                            }]
+                        },
+                        options: {
+                            cutout: '72%',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: '#241711',
+                                    padding: 14,
+                                    displayColors: false,
+                                    cornerRadius: 14,
+                                    callbacks: {
+                                        label: function (context) {
+                                            return context.label + ': ' + context.parsed + '%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
 @endif
 @endsection
