@@ -362,7 +362,6 @@
             ['Feedback', route('feedback.index'), 'feedback.*', 'message-circle', 'Suara pelanggan'],
             ['Journey Map', route('cjm.index'), 'cjm.*', 'map', 'Tahapan CJM'],
             ['Segmentasi', route('segmentasi.index'), 'segmentasi.*', 'pie-chart', 'Loyalitas customer'],
-            ['Laporan', route('laporan.index'), 'laporan.*', 'file-text', 'Analisis manajemen'],
         ];
 
         $operatorMenu = [
