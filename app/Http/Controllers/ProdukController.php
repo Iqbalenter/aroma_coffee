@@ -15,20 +15,23 @@ class ProdukController extends Controller
     $kategori = $request->get("kategori");
     $status = $request->get("status");
 
-    $defaultKategori = collect(["Coffee", "Non-Coffee", "Snack", "Pastry"]);
+    // 1. Definisikan kategori bawaan
+    $defaultKategori = collect(["Coffee", "Non-Coffee"]);
 
-    $kategoriOptions = Produk::query()
+    // 2. Ambil kategori yang sudah ada di Database
+    $kategoriDariDB = Produk::query()
       ->whereNotNull("kategori")
       ->where("kategori", "!=", "")
       ->distinct()
-      ->orderBy("kategori")
       ->pluck("kategori")
-      ->filter()
-      ->values();
+      ->filter();
 
-    if ($kategoriOptions->isEmpty()) {
-      $kategoriOptions = $defaultKategori;
-    }
+    // 3. Gabungkan keduanya, hapus yang duplikat, dan urutkan sesuai abjad
+    $kategoriOptions = $defaultKategori
+      ->merge($kategoriDariDB)
+      ->unique()
+      ->sort()
+      ->values();
 
     $query = Produk::query()
       ->withCount(["detailTransaksi", "feedback"])
