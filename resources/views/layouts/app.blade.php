@@ -102,7 +102,7 @@
 
         .sidebar {
             background:
-                linear-gradient(180deg, rgba(59, 39, 29, .98) 0%, rgba(36, 23, 17, .98) 100%);
+                linear-gradient(180deg, rgba(111, 78, 55, .98) 0%, rgba(59, 39, 29, .98) 100%);
             border-right: 1px solid rgba(255, 255, 255, .08);
         }
 
@@ -119,7 +119,7 @@
             gap: .85rem;
             padding: .82rem .95rem;
             border-radius: 1rem;
-            color: rgba(255, 255, 255, .68);
+            color: rgba(255, 255, 255, .65);
             font-size: .875rem;
             font-weight: 600;
             transition: all .22s ease;
@@ -127,14 +127,14 @@
 
         .nav-link:hover {
             color: white;
-            background: rgba(255, 255, 255, .07);
+            background: rgba(255, 255, 255, .08);
             transform: translateX(3px);
         }
 
         .nav-link.active {
-            color: #FFF7EA;
-            background: linear-gradient(135deg, rgba(199, 149, 91, .32), rgba(199, 149, 91, .10));
-            box-shadow: inset 0 0 0 1px rgba(248, 239, 227, .12);
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(199, 149, 91, .9), rgba(167, 120, 77, .9));
+            box-shadow: 0 4px 15px rgba(59, 39, 29, .25);
         }
 
         .nav-link.active::before {
@@ -145,7 +145,7 @@
             width: 5px;
             height: 58%;
             border-radius: 999px;
-            background: var(--caramel);
+            background: #ffffff;
             transform: translateY(-50%);
         }
 
@@ -178,7 +178,7 @@
             min-height: 2.65rem;
             padding: .72rem 1.15rem;
             border-radius: 999px;
-            background: linear-gradient(135deg, var(--mocha), var(--espresso));
+            background: linear-gradient(135deg, var(--caramel), var(--mocha));
             color: white;
             font-size: .875rem;
             font-weight: 700;
@@ -335,7 +335,7 @@
         }
 
         .active-step {
-            background: linear-gradient(135deg, var(--mocha), var(--espresso));
+            background: linear-gradient(135deg, var(--caramel), var(--mocha));
             color: white;
         }
 
@@ -362,6 +362,7 @@
             ['Feedback', route('feedback.index'), 'feedback.*', 'message-circle', 'Suara pelanggan'],
             ['Journey Map', route('cjm.index'), 'cjm.*', 'map', 'Tahapan CJM'],
             ['Segmentasi', route('segmentasi.index'), 'segmentasi.*', 'pie-chart', 'Loyalitas customer'],
+            ['Laporan', route('laporan.index'), 'Laporan.*', 'file-bar-chart', 'Rekap performa bisnis'],
         ];
 
         $operatorMenu = [
@@ -377,7 +378,7 @@
     @if($staff)
         <div class="flex h-screen w-full overflow-hidden">
             <div id="sidebarBackdrop"
-                 class="fixed inset-0 z-40 hidden bg-coffee-ink/55 opacity-0 backdrop-blur-sm transition-opacity lg:hidden"
+                 class="fixed inset-0 z-40 hidden bg-coffee-mocha/55 opacity-0 backdrop-blur-sm transition-opacity lg:hidden"
                  onclick="toggleSidebar()"></div>
 
             <aside id="sidebar"
@@ -489,7 +490,7 @@
                             </p>
                         </div>
 
-                        <div class="rounded-2xl border border-coffee-mocha/10 bg-coffee-espresso px-4 py-3 text-white">
+                        <div class="rounded-2xl border border-coffee-mocha/10 bg-coffee-bronze px-4 py-3 text-white">
                             <p class="text-[10px] font-bold uppercase tracking-[.18em] text-coffee-caramel">
                                 Role
                             </p>

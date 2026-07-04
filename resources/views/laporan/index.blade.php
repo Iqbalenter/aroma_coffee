@@ -199,7 +199,7 @@
         gap: .5rem;
         border-radius: 999px;
         padding: .78rem 1.1rem;
-        background: #3B271D;
+        background: linear-gradient(135deg, var(--caramel), var(--mocha));
         color: white;
         font-size: .875rem;
         font-weight: 800;

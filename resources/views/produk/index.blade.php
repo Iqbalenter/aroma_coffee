@@ -166,7 +166,7 @@
         transition: all .18s ease;
     }
 
-    .product-action:hover { background: #3B271D; color: white; }
+    .product-action:hover { background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white; }
     .product-danger:hover { background: #B4533C; color: white; }
 
     .product-empty {
@@ -336,7 +336,7 @@
                 <div class="mt-6 flex flex-wrap gap-3">
                     <button type="button"
                             onclick="document.getElementById('createProductDialog').showModal()"
-                            class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                            class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         Tambah Produk
                     </button>

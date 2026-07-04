@@ -163,7 +163,7 @@
         transition: all .18s ease;
     }
 
-    .customer-action:hover { background: #3B271D; color: white; }
+    .customer-action:hover { background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white; }
     .customer-danger:hover { background: #B4533C; color: white; }
 
     .customer-mobile-card {
@@ -318,7 +318,7 @@
                 <div class="mt-6 flex flex-wrap gap-3">
                     <button type="button"
                             onclick="document.getElementById('createCustomerDialog').showModal()"
-                            class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                            class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         Pelanggan Baru
                     </button>
@@ -518,7 +518,7 @@
 
             <div class="mt-5 rounded-3xl border border-[#6F4E37]/10 bg-[#F8EFE3]/55 p-5">
                 <div class="flex items-start gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#3B271D] text-white">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-white">
                         <i data-lucide="lightbulb" class="h-5 w-5"></i>
                     </div>
 
@@ -589,7 +589,7 @@
                             <tr>
                                 <td>
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#3B271D] text-sm font-extrabold text-white">
+                                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-sm font-extrabold text-white">
                                             {{ strtoupper(\Illuminate\Support\Str::substr($p->nama, 0, 1)) }}
                                         </div>
 
@@ -725,7 +725,7 @@
                 <article class="customer-mobile-card">
                     <div class="mb-4 flex items-start justify-between gap-3">
                         <div class="flex min-w-0 items-center gap-3">
-                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#3B271D] text-sm font-extrabold text-white">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-sm font-extrabold text-white">
                                 {{ strtoupper(\Illuminate\Support\Str::substr($p->nama, 0, 1)) }}
                             </div>
 

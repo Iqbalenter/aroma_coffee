@@ -105,7 +105,7 @@
         align-items: center;
         justify-content: center;
         border-radius: .9rem;
-        background: #3B271D;
+        background: linear-gradient(135deg, var(--caramel), var(--mocha));
         color: white;
         font-weight: 900;
         transition: all .18s ease;
@@ -232,7 +232,7 @@
 
                 <div class="mt-6 flex flex-wrap gap-3">
                     <a href="{{ route('dashboard') }}"
-                       class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                       class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                         <i data-lucide="arrow-left" class="h-4 w-4"></i>
                         Kembali ke Dashboard
                     </a>
@@ -446,7 +446,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-5 rounded-3xl bg-[#3B271D] p-5 text-white">
+                    <div class="mt-5 rounded-3xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha p-5 text-white">
                         <div class="mb-3 flex items-center justify-between text-sm">
                             <span class="font-bold uppercase tracking-[.14em] text-[#C7955B]">Total Item</span>
                             <span id="totalItems" class="font-extrabold">0</span>

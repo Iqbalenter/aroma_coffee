@@ -425,7 +425,7 @@
 
                 <div class="mt-6 flex flex-wrap gap-3">
                     <a href="{{ route('pelanggan.index') }}"
-                       class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                       class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                         <i data-lucide="users" class="h-4 w-4"></i>
                         Data Pelanggan
                     </a>

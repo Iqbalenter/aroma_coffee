@@ -100,7 +100,7 @@
         border: 1px solid rgba(111, 78, 55, .10); background: rgba(255, 255, 255, .72);
         color: #6F4E37; transition: all .18s ease;
     }
-    .feedback-action:hover { background: #3B271D; color: white; }
+    .feedback-action:hover { background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white; }
     .feedback-danger:hover { background: #B4533C; color: white; }
 
     .feedback-empty {
@@ -171,7 +171,7 @@
                     Halaman ini digunakan untuk membaca komentar, rating, kategori pengalaman, status tindak lanjut, dan tahap customer journey pelanggan Aroma Coffee.
                 </p>
                 <div class="mt-6 flex flex-wrap gap-3">
-                    <a href="{{ route('feedback.create') }}" class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                    <a href="{{ route('feedback.create') }}" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                         <i data-lucide="plus" class="h-4 w-4"></i> Catat Feedback
                     </a>
                     <a href="{{ route('cjm.index') }}" class="inline-flex items-center gap-2 rounded-full border border-[#6F4E37]/15 bg-white/65 px-4 py-3 text-sm font-bold text-[#3B271D] transition hover:bg-white">

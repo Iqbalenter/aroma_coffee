@@ -65,7 +65,7 @@
 @endphp
 
 <div class="space-y-8">
-    <section class="relative overflow-hidden rounded-[2rem] bg-coffee-espresso shadow-soft">
+    <section class="relative overflow-hidden rounded-[2rem] bg-gradient-to-b from-coffee-mocha to-coffee-espresso shadow-soft">
         <div class="absolute inset-0 coffee-grain-bg opacity-45"></div>
         <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coffee-caramel/30 blur-3xl"></div>
         <div class="absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-coffee-latte/10 blur-3xl"></div>
@@ -182,7 +182,7 @@
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
             @foreach($journeyStages as $index => [$stage, $description])
                 <div class="rounded-3xl border border-coffee-mocha/10 bg-white/55 p-4">
-                    <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-coffee-espresso text-sm font-extrabold text-white">
+                    <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-sm font-extrabold text-white">
                         {{ $index + 1 }}
                     </div>
 
@@ -271,7 +271,7 @@
     @else
         <section class="grid gap-6 md:grid-cols-3">
             <a href="{{ route('transaksi.create') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
-                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-espresso text-white">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-mocha to-coffee-espresso text-white">
                     <i data-lucide="calculator" class="h-6 w-6"></i>
                 </div>
                 <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Input Transaksi</h3>
@@ -281,7 +281,7 @@
             </a>
 
             <a href="{{ route('feedback.create') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
-                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-caramel text-white">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-white">
                     <i data-lucide="mic" class="h-6 w-6"></i>
                 </div>
                 <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Tambah Feedback</h3>
@@ -291,7 +291,7 @@
             </a>
 
             <a href="{{ route('pelanggan.index') }}" class="card p-6 transition hover:-translate-y-1 hover:shadow-soft">
-                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-coffee-bronze text-white">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-coffee-bronze to-coffee-mocha text-white">
                     <i data-lucide="users" class="h-6 w-6"></i>
                 </div>
                 <h3 class="font-serif text-2xl font-bold text-coffee-espresso">Data Pelanggan</h3>

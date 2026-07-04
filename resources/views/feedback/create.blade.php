@@ -43,7 +43,7 @@
         font-weight: 900; transition: all .18s ease;
     }
     .feedback-rating-option input:checked + .feedback-rating-card {
-        border-color: rgba(199, 149, 91, .55); background: #3B271D; color: white;
+        border-color: rgba(199, 149, 91, .55); background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white;
         box-shadow: 0 14px 30px rgba(59, 39, 29, .18); transform: translateY(-2px);
     }
 
@@ -55,7 +55,7 @@
     .feedback-guide-number {
         display: inline-flex; align-items: center; justify-content: center;
         width: 2rem; height: 2rem; border-radius: .85rem;
-        background: #3B271D; color: white; font-size: .75rem; font-weight: 900;
+        background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white; font-size: .75rem; font-weight: 900;
     }
     .feedback-step-card {
         border-radius: 1.25rem; background: rgba(255, 251, 245, .70);
@@ -95,13 +95,13 @@
                 <div class="mt-6 flex flex-wrap gap-3">
                     @if($isAdmin)
                         <a href="{{ route('feedback.index') }}"
-                        class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                        class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                             <i data-lucide="arrow-left" class="h-4 w-4"></i>
                             Kembali ke Data Feedback
                         </a>
                     @else
                         <a href="{{ route('dashboard') }}"
-                        class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                        class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                             <i data-lucide="arrow-left" class="h-4 w-4"></i>
                             Kembali ke Dashboard
                         </a>

@@ -4,16 +4,16 @@
 
 @section('content')
 <div class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
-    <div class="absolute inset-0">
-        <div class="absolute left-[-8rem] top-[-8rem] h-96 w-96 rounded-full bg-coffee-caramel/20 blur-3xl"></div>
-        <div class="absolute bottom-[-8rem] right-[-8rem] h-96 w-96 rounded-full bg-coffee-mocha/20 blur-3xl"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#FDF9F3] via-[#F8EFE3] to-[#E8D6BF]">
+        <div class="absolute left-[-8rem] top-[-8rem] h-96 w-96 rounded-full bg-coffee-caramel/30 blur-3xl"></div>
+        <div class="absolute bottom-[-8rem] right-[-8rem] h-96 w-96 rounded-full bg-coffee-bronze/30 blur-3xl"></div>
     </div>
 
-    <div class="relative grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-coffee-mocha/10 bg-white/60 shadow-soft backdrop-blur-xl lg:grid-cols-[1.05fr_.95fr]">
-        <section class="relative hidden overflow-hidden bg-coffee-espresso p-10 text-white lg:block">
+    <div class="relative grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-coffee-caramel/20 bg-white/70 shadow-2xl shadow-coffee-caramel/10 backdrop-blur-xl lg:grid-cols-[1.05fr_.95fr]">
+        <section class="relative hidden overflow-hidden bg-gradient-to-b from-coffee-espresso to-coffee-mocha p-10 text-white lg:block">
             <div class="absolute inset-0 coffee-grain-bg opacity-45"></div>
             <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coffee-caramel/30 blur-3xl"></div>
-            <div class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-coffee-latte/10 blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-coffee-latte/20 blur-3xl"></div>
 
             <div class="relative flex h-full min-h-[620px] flex-col justify-between">
                 <div>
@@ -53,7 +53,7 @@
         <section class="p-6 md:p-10">
             <div class="mx-auto flex min-h-[620px] max-w-md flex-col justify-center">
                 <div class="mb-8 text-center lg:text-left">
-                    <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-coffee-espresso text-white shadow-card lg:mx-0">
+                    <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha text-white shadow-card lg:mx-0">
                         <i data-lucide="coffee" class="h-8 w-8"></i>
                     </div>
 

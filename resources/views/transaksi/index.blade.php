@@ -72,7 +72,7 @@
         height: 2.35rem; border-radius: .9rem; border: 1px solid rgba(111, 78, 55, .10);
         background: rgba(255, 255, 255, .72); color: #6F4E37; transition: all .18s ease;
     }
-    .trx-action:hover { background: #3B271D; color: white; }
+    .trx-action:hover { background: linear-gradient(135deg, var(--caramel), var(--mocha)); color: white; }
     .trx-danger:hover { background: #B4533C; color: white; }
     .trx-mobile-card {
         border-radius: 1.35rem; background: rgba(255, 255, 255, .82); border: 1px solid rgba(111, 78, 55, .10);
@@ -150,7 +150,7 @@
                 </p>
                 <div class="mt-6 flex flex-wrap gap-3">
                     @if($isOperator)
-                        <a href="{{ route('transaksi.create') }}" class="inline-flex items-center gap-2 rounded-full bg-[#3B271D] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
+                        <a href="{{ route('transaksi.create') }}" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-coffee-caramel to-coffee-mocha px-4 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5">
                             <i data-lucide="plus" class="h-4 w-4"></i> Input Transaksi
                         </a>
                     @endif
@@ -383,7 +383,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-5 flex items-center justify-between rounded-3xl bg-[#3B271D] p-5 text-white">
+                    <div class="mt-5 flex items-center justify-between rounded-3xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha p-5 text-white">
                         <span class="text-sm font-bold uppercase tracking-[.14em] text-[#C7955B]">Total Pembayaran</span>
                         <span class="text-2xl font-extrabold">{{ $rupiah($t->total_harga) }}</span>
                     </div>
