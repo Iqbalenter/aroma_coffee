@@ -31,25 +31,19 @@ class FeedbackController extends Controller
                 ->with('error', 'Operator hanya dapat mencatat feedback baru, tidak dapat melihat data feedback pelanggan.');
         }
 
-        $fallbackKategori = collect([
-            'Rasa Produk',
-            'Pelayanan',
-            'Harga',
-            'Tempat/Suasana',
-        ]);
-
-        $kategoriOptions = Feedback::query()
+        $dbKategori = Feedback::query()
             ->whereNotNull('kategori')
             ->where('kategori', '!=', '')
             ->distinct()
-            ->orderBy('kategori')
             ->pluck('kategori')
-            ->filter()
-            ->values();
+            ->toArray();
 
-        if ($kategoriOptions->isEmpty()) {
-            $kategoriOptions = $fallbackKategori;
-        }
+        $kategoriOptions = collect([
+            'Rasa Produk',
+            'Layanan',
+            'Harga',
+            'Tempat/Suasana',
+        ])->merge($dbKategori)->unique()->sort()->values();
 
         $feedbackQuery = Feedback::with(['pelanggan', 'produk']);
 
@@ -174,23 +168,19 @@ class FeedbackController extends Controller
         $pelanggan = Pelanggan::orderBy('nama')->get();
         $produk = Produk::orderBy('nama_produk')->get();
 
-        $kategoriOptions = Feedback::query()
+        $dbKategori = Feedback::query()
             ->whereNotNull('kategori')
             ->where('kategori', '!=', '')
             ->distinct()
-            ->orderBy('kategori')
             ->pluck('kategori')
-            ->filter()
-            ->values();
+            ->toArray();
 
-        if ($kategoriOptions->isEmpty()) {
-            $kategoriOptions = collect([
-                'Rasa Produk',
-                'Pelayanan',
-                'Harga',
-                'Tempat/Suasana',
-            ]);
-        }
+        $kategoriOptions = collect([
+            'Rasa Produk',
+            'Layanan',
+            'Harga',
+            'Tempat/Suasana',
+        ])->merge($dbKategori)->unique()->sort()->values();
 
         return view('feedback.create', compact('pelanggan', 'produk', 'kategoriOptions'));
     }
