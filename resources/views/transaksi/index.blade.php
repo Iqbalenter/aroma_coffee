@@ -383,6 +383,17 @@
                             </tbody>
                         </table>
                     </div>
+                    @if(filled($t->catatan))
+                        <div class="mt-5 rounded-3xl border border-[#6F4E37]/10 bg-[#F8EFE3] p-5">
+                            <p class="mb-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#A7784D]">
+                                Catatan Transaksi
+                            </p>
+
+                            <p class="whitespace-pre-line text-sm leading-7 text-[#3B271D]">
+                                {{ filled($t->catatan) ? $t->catatan : 'Tidak ada catatan.' }}
+                            </p>
+                        </div>
+                    @endif
                     <div class="mt-5 flex items-center justify-between rounded-3xl bg-gradient-to-br from-coffee-caramel to-coffee-mocha p-5 text-white">
                         <span class="text-sm font-bold uppercase tracking-[.14em] text-[#C7955B]">Total Pembayaran</span>
                         <span class="text-2xl font-extrabold">{{ $rupiah($t->total_harga) }}</span>
